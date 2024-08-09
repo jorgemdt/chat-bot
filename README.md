@@ -15,6 +15,7 @@ Este projeto implementa uma API REST usando FastAPI, que interage com o Google G
 - Pydantic
 - Google Generative AI
 - Uvicorn (para execução do servidor)
+- HTML e JavaScript (para interação via página web)
 
 ## Requisitos
 
@@ -56,15 +57,28 @@ Este projeto implementa uma API REST usando FastAPI, que interage com o Google G
 
     No arquivo `recursos.py`, adicione sua chave da API Google Generative AI na função `api_key()`.
 
-6. **Execute a aplicação:**
+6. **Abra a página `index.html` no navegador:**
+
+    Navegue até o diretório do projeto e abra o arquivo `index.html` no seu navegador (basta dar um duplo clique no arquivo ou abrir manualmente pelo navegador).
+
+7. **Inicie o servidor:**
+
+    Execute o servidor com o comando:
 
     ```bash
     uvicorn main:app --host 0.0.0.0 --port 8000
     ```
 
-7. **Acesse a API:**
+8. **Interaja com a API através da página web ou via API:**
 
-    Abra o navegador e acesse `http://localhost:8000/docs` para ver a documentação interativa do FastAPI.
+    - **Via página web:** Use a página `index.html` para enviar prompts e visualizar as respostas diretamente no navegador.
+    - **Via API:** Envie requisições POST para a rota `/chat/` com o seguinte corpo JSON:
+
+    ```json
+    {
+      "prompt": "Seu texto aqui"
+    }
+    ```
 
 ### Linux
 
@@ -99,21 +113,26 @@ Este projeto implementa uma API REST usando FastAPI, que interage com o Google G
 
     No arquivo `recursos.py`, adicione sua chave da API Google Generative AI na função `api_key()`.
 
-6. **Execute a aplicação:**
+6. **Abra a página `index.html` no navegador:**
+
+    Navegue até o diretório do projeto e abra o arquivo `index.html` no seu navegador (basta dar um duplo clique no arquivo ou abrir manualmente pelo navegador).
+
+7. **Inicie o servidor:**
+
+    Execute o servidor com o comando:
 
     ```bash
     uvicorn main:app --host 0.0.0.0 --port 8000
     ```
 
-7. **Acesse a API:**
+8. **Interaja com a API através da página web ou via API:**
 
-    Abra o navegador e acesse `http://localhost:8000/docs` para ver a documentação interativa do FastAPI.
+    - **Via página web:** Use a página `index.html` para enviar prompts e visualizar as respostas diretamente no navegador.
+    - **Via API:** Envie requisições POST para a rota `/chat/` com o seguinte corpo JSON:
 
-## Uso
+    ```json
+    {
+      "prompt": "Seu texto aqui"
+    }
+    ```
 
-Após seguir as instruções de instalação, você pode começar a usar a API enviando requisições POST para a rota `/chat/` com o seguinte corpo JSON:
-
-```json
-{
-  "prompt": "Seu texto aqui"
-}
