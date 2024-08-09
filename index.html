@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #121212;
+            color: #ffffff;
+        }
+        #chat-box {
+            width: 80%;
+            max-width: 600px;
+            border: 1px solid #333;
+            padding: 10px;
+            margin-bottom: 20px;
+            height: 300px;
+            overflow-y: auto;
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+        #chat-box p {
+            margin: 5px 0;
+        }
+        #chat-box .user {
+            color: #4e9af1;
+        }
+        #chat-box .bot {
+            color: #80c683;
+        }
+        form {
+            display: flex;
+            width: 80%;
+            max-width: 600px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #333;
+            color: #ffffff;
+            border: 1px solid #555;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4e9af1;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #357ab8;
+        }
+        #loading {
+            font-style: italic;
+            color: #bbbbbb;
+            margin-top: -15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chatbot</h1>
+    <div id="chat-box"></div>
+    <div id="loading">Aguardando resposta...</div>
+    <form id="chat-form">
+        <input type="text" id="user-input" placeholder="Digite sua mensagem..." required />
+        <button type="submit">Enviar</button>
+    </form>
+
+    <script>
+        function removeMarkdown(text) {
+            // Remove asteriscos e outros símbolos de markdown
+            return text.replace(/[*_~`]/g, '');
+        }
+
+        function scrollToBottom() {
+            const chatBox = document.getElementById('chat-box');
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        document.getElementById('chat-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const userInput = document.getElementById('user-input');
+            const chatBox = document.getElementById('chat-box');
+            const loading = document.getElementById('loading');
+
+            const userMessage = userInput.value;
+            chatBox.innerHTML += `<p class="user">Você: ${userMessage}</p>`;
+
+            userInput.value = '';
+            loading.style.display = 'block'; // Mostrar mensagem de carregamento
+
+            try {
+                const response = await fetch('http://localhost:8000/chat/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ prompt: userMessage })
+                });
+
+                const data = await response.json();
+                const cleanResponse = removeMarkdown(data.response);
+                chatBox.innerHTML += `<p class="bot">🤖: ${cleanResponse}</p>`;
+            } catch (error) {
+                chatBox.innerHTML += `<p class="bot">Erro: Não foi possível conectar ao servidor.</p>`;
+            } finally {
+                loading.style.display = 'none'; // Ocultar mensagem de carregamento
+            }
+
+            scrollToBottom(); // Rolagem para a última mensagem
+        });
+    </script>
+</body>
+</html>
