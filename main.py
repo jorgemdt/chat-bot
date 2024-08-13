@@ -3,6 +3,7 @@ from pydantic import BaseModel
 import google.generativeai as genai
 import recursos
 from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
 
 # Configurar a API com FastAPI
 app = FastAPI()
@@ -44,5 +45,4 @@ def chat_with_model(request: PromptRequest):
 
 # Iniciar o servidor com Uvicorn (opcional)
 if __name__ == "__main__":
-    import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
