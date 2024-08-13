@@ -31,7 +31,7 @@ Este projeto implementa uma API REST usando FastAPI, que interage com o Google G
     Abra o Prompt de Comando e execute:
 
     ```bash
-    git clone https://github.com/seu-usuario/seu-projeto.git
+    git clone git@github.com:jorgemdt/chat-bot.git
     cd seu-projeto
     ```
 
