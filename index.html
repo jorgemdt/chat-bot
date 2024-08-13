@@ -86,6 +86,23 @@
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
+        function typeEffect(element, text, delay = 35) {
+            let i = 0;
+            function typing() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    scrollToBottom(); // Mantém a rolagem conforme o texto é digitado
+                    setTimeout(typing, delay);
+                } else {
+                    // Reabilitar a caixa de entrada e o botão após o texto estar completamente digitado
+                    document.getElementById('user-input').disabled = false;
+                    document.querySelector('button').disabled = false;
+                }
+            }
+            typing();
+        }
+
         document.getElementById('chat-form').addEventListener('submit', async function(event) {
             event.preventDefault();
 
@@ -97,6 +114,8 @@
             chatBox.innerHTML += `<p class="user">Você: ${userMessage}</p>`;
 
             userInput.value = '';
+            userInput.disabled = true; // Desabilitar a caixa de entrada
+            document.querySelector('button').disabled = true; // Desabilitar o botão de envio
             loading.style.display = 'block'; // Mostrar mensagem de carregamento
 
             try {
@@ -110,7 +129,13 @@
 
                 const data = await response.json();
                 const cleanResponse = removeMarkdown(data.response);
-                chatBox.innerHTML += `<p class="bot">🤖: ${cleanResponse}</p>`;
+                
+                // Criar um elemento para a resposta do bot e aplicar o efeito de datilografia
+                const botMessage = document.createElement('p');
+                botMessage.classList.add('bot');
+                botMessage.innerHTML = '🤖: ';
+                chatBox.appendChild(botMessage);
+                typeEffect(botMessage, cleanResponse);
             } catch (error) {
                 chatBox.innerHTML += `<p class="bot">Erro: Não foi possível conectar ao servidor.</p>`;
             } finally {
