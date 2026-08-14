@@ -1,4 +1,4 @@
-# Projeto FastAPI com Google Generative AI
+# [Projeto de Estudo] FastAPI com Google Generative AI
 
 Este projeto implementa uma API REST usando FastAPI, que interage com o Google Generative AI para gerar respostas baseadas em prompts fornecidos pelo usuário. A API permite o envio de prompts via requisições POST e retorna a resposta gerada pelo modelo.
 
