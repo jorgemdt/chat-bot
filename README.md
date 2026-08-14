@@ -32,7 +32,7 @@ Este projeto implementa uma API REST usando FastAPI, que interage com o Google G
 
     ```bash
     git clone https://github.com/jorgemdt/chat-bot.git
-    cd seu-projeto
+    cd chat-bot
     ```
 
 2. **Crie um ambiente virtual:**
